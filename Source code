@@ -1,0 +1,743 @@
+--title page -> by zhaok31--
+import Zhaok31.AmongUsTitle
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=c56a827c-ecc2-44fe-a0ae-7a69ddc12154
+--
+
+--map parts -> by zhaok31--
+import Zhaok31.AmongUsCaf
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=b20ff7ca-4cc8-442b-92e2-5def5b08d3c4
+import Zhaok31.AmongUsMedBay
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=58c8b8a8-c9f8-4803-86bf-26c09c8965be
+import Zhaok31.AmongUsUpperEngine
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=c0a72e13-d1f0-4b17-9c0a-f8f485d5b901
+import Zhaok31.AmongUsReactor
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=42ce5f16-dfac-49f3-a38d-bfc92a547181
+import Zhaok31.AmongUsSecurity
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=503c688d-6742-4d70-8257-027fa78d5ade
+import Zhaok31.AmongUsLowerEngine
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=94e6b887-a8d4-4ac8-81cc-c48865d93a83
+import Zhaok31.AmongUsElectrical
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=c321c8a5-d7a0-4889-918a-fcc5c8c42d8d
+import Zhaok31.AmongUsStorage
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=d3267472-1cec-484c-99ce-4e96ea26777e
+import Zhaok31.AmongUsAdmin
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=2e2bd905-bb80-4fa6-bc79-3719790787b4
+--
+
+--wires game -> by Pater137--
+import Zhaok31.WiresGame
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=f077148d-7dbf-4ca8-8561-14e0b32ffe1e
+--
+
+--leafs game -> by Saxenp4--
+import Zhaok31.Oxygentankgame10
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=9009ef86-5a6e-425e-983e-67722571b61b
+--
+
+--card swipe game -> by Talasilu and Nairs22 --
+import Zhaok31.CardSwiper
+--https://cs1xd3.online/ShowModulePublish?modulePublishId=eec30ed9-38c3-4771-b75e-453bec210e46
+--
+
+
+
+
+--color for button
+coolYellow = rgb 255 176 0
+
+myShapes: Model -> List(Shape Msg)
+myShapes model =
+      case model.state of
+
+   
+-- title screen state, created by zhaok31
+    TitleScreen -> [
+          Zhaok31.AmongUsTitle.myShapes model.agtModel
+          |> group
+          |> GraphicSVG.map AGTMsg,
+          group [
+               roundedRect 50 15 5
+                 |> filled black
+                 |> move (0,-30)
+                 |> notifyTap StartButton,
+               text "Play"
+                 |> centered
+                 |> customFont ("Arial")
+                 |> bold
+                 |> size 8
+                 |> filled white
+                 |> move(0, -32)
+                 |> notifyTap StartButton
+                 ]
+        ]
+-- Caf screen state, created by zhaok31       
+    Caf -> [
+           Zhaok31.AmongUsCaf.myShapes model.agcModel
+            |> group
+            |> GraphicSVG.map AGCMsg,
+            group[
+                roundedRect 35 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "MedBay"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (-20, -30)
+                  |> notifyTap MedBayButton,
+              group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Upper Engine"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (-70, -10)
+                  |> notifyTap UpperEngineButton
+          ]
+    -- medbay screen state - created by zhaok31
+    MedBay -> [
+           Zhaok31.AmongUsMedBay.myShapes model.agmModel
+            |> group
+            |> GraphicSVG.map AGMMsg,
+            group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Upper Engine"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (-50, 20)
+                  |> notifyTap UpperEngineButton
+            ]
+    
+    -- UpperEngine screen state - created by zhaok31
+    UpperEngine -> [
+           Zhaok31.AmongUsUpperEngine.myShapes model.aguModel
+            |> group
+            |> GraphicSVG.map AGUMsg,
+            group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Reactor"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (-70, -20)
+                  |> notifyTap ReactorButton,
+            group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Security"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (60, -20)
+                  |> notifyTap SecurityButton,
+            group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Lower Engine"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (0, -45)
+                  |> notifyTap LowerEngineButton
+            ]
+            
+    -- Reactor screen state - created by zhaok31
+    Reactor -> [
+               Zhaok31.AmongUsReactor.myShapes model.agrModel
+                |> group
+                |> GraphicSVG.map AGRMsg,
+            group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Security"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (60, 10)
+                  |> notifyTap SecurityButton,
+            group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Lower Engine"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (5, -40)
+                  |> notifyTap LowerEngineButton,
+            group
+              [
+                circle 15
+                  |> filled coolYellow
+                  |> makeTransparent 0.6,
+
+                circle 15 
+                  |> outlined (solid 1) black
+                  |> makeTransparent 0.8,
+
+                text "!"
+                  |> centered 
+                  |> filled coolYellow
+                  |> makeTransparent 0.8
+                  |> scale 2.5
+                  |> move (0.5, -9)
+              ]
+              |> scale 0.6
+              |> move (-80,20)
+              |> notifyTap OxyButton
+              ]
+
+                
+    -- Security screen state - created by zhaok31
+    Security -> [
+               Zhaok31.AmongUsSecurity.myShapes model.agsModel
+                |> group
+                |> GraphicSVG.map AGSMsg,
+               group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Reactor"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (-60, 20)
+                  |> notifyTap ReactorButton,
+               group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Lower Engine"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (5, -40)
+                  |> notifyTap LowerEngineButton
+                ]    
+             
+                
+    -- LowerEngine screen state - created by zhaok31
+    LowerEngine -> [
+               Zhaok31.AmongUsLowerEngine.myShapes model.aglModel
+                |> group
+                |> GraphicSVG.map AGLMsg,
+                group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Electrical"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (15, 30)
+                  |> notifyTap ElectricalButton,
+               group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Storage"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (70, -20)
+                  |> notifyTap StorageButton
+                ]    
+                
+-- Electrical screen state - created by zhaok31
+    Electrical -> [
+               Zhaok31.AmongUsElectrical.myShapes model.ageModel
+                |> group
+                |> GraphicSVG.map AGEMsg,
+                group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Storage"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (70, -20)
+                  |> notifyTap StorageButton,
+                  
+               group
+                  [
+                circle 15
+                  |> filled coolYellow
+                  |> makeTransparent 0.6,
+
+                circle 15 
+                  |> outlined (solid 1) black
+                  |> makeTransparent 0.8,
+
+                text "!"
+                  |> centered 
+                  |> filled coolYellow
+                  |> makeTransparent 0.8
+                  |> scale 2.5
+                  |> move (0.5, -9)
+              ]
+              |> scale 0.6
+              |> move (-15,40)
+              |> notifyTap WireButton
+           ]    
+                
+                
+--  Storage screen state - created by zhaok31
+    Storage -> [
+               Zhaok31.AmongUsStorage.myShapes model.agstModel
+                |> group
+                |> GraphicSVG.map AGSTMsg,
+                group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Admin"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (65, 5)
+                  |> notifyTap AdminButton,             
+                group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Cafeteria"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (5, 45)
+                  |> notifyTap CafButton
+                ]
+                
+-- Admin screen state - created by zhaok31
+    Admin -> [
+               Zhaok31.AmongUsAdmin.myShapes model.agaModel
+                |> group
+                |> GraphicSVG.map AGAMsg,
+                group[
+                roundedRect 55 15 5
+                  |> filled coolYellow
+                  |> makeTransparent 0.5
+                  |> move (0,5),
+
+                text "Cafeteria"
+                  |> centered
+                  |> size 8
+                  |> customFont "Comic Sans MS" 
+                  |> filled white
+                  ]
+                  |> move (-25, 20)
+                  |> notifyTap CafButton,               
+                group
+                  [
+                circle 15
+                  |> filled coolYellow
+                  |> makeTransparent 0.6,
+
+                circle 15 
+                  |> outlined (solid 1) black
+                  |> makeTransparent 0.8,
+
+                text "!"
+                  |> centered 
+                  |> filled coolYellow
+                  |> makeTransparent 0.8
+                  |> scale 2.5
+                  |> move (0.5, -9)
+              ]
+              |> scale 0.6
+              |> move (80,0)
+              |> notifyTap CardButton
+             ]
+
+ --Card swipe minigame screen state - created by  Talasilu and Nairs22
+    CardSwipe -> [
+              Zhaok31.CardSwiper.myShapes model.agcardModel
+                |> group
+                |> GraphicSVG.map AGCARDMsg,
+                
+                 group 
+                  [
+                    roundedRect 40 20 5
+                      |> filled red
+                      |> makeTransparent 0.8,
+
+                    text "EXIT"
+                      |> filled white
+                      |> move (-13, -4)
+                  ]
+                  |> move (75, 50)
+                  |> notifyTap CardExitButton
+
+               ]
+    
+ --reactor minigame screen state - created by saxenp4
+    Oxygen -> [
+               Zhaok31.Oxygentankgame10.myShapes model.agoxyModel
+                |> group
+                |> GraphicSVG.map AGOXYMsg,
+                
+                 group 
+                  [
+                    roundedRect 40 20 5
+                      |> filled red
+                      |> makeTransparent 0.8,
+
+                    text "EXIT"
+                      |> filled white
+                      |> move (-13, -4)
+                  ]
+                  |> scale 0.7
+                  |> move (-70,-45)
+                  |> notifyTap OxyExitButton
+                ]
+                
+ --reactor minigame screen state - created by saxenp4               
+    Wire -> [
+               Zhaok31.WiresGame.myShapes model.agwireModel
+                |> group
+                |> GraphicSVG.map AGWIREMsg,
+                
+                
+                group 
+                  [
+                    roundedRect 40 20 5
+                      |> filled red
+                      |> makeTransparent 0.8,
+
+                    text "EXIT"
+                      |> filled white
+                      |> move (-13, -4)
+                  ]
+                  |> scale 0.7
+                  |> move (0,-55)
+                  |> notifyTap WireExitButton
+                ]
+        
+    
+--msgs               
+type Msg = Tick Float GetKeyState   
+          | StartButton
+          | MedBayButton
+          | UpperEngineButton
+          | ReactorButton
+          | SecurityButton
+          | LowerEngineButton
+          | ElectricalButton
+          | StorageButton
+          | AdminButton
+          | CafButton
+          | CardExitButton
+          | OxyButton
+          | OxyExitButton
+          | CardButton
+          | WireButton
+          | WireExitButton
+          | AGTMsg Zhaok31.AmongUsTitle.Msg
+          | AGCMsg Zhaok31.AmongUsCaf.Msg
+          | AGMMsg Zhaok31.AmongUsMedBay.Msg
+          | AGUMsg Zhaok31.AmongUsUpperEngine.Msg
+          | AGRMsg Zhaok31.AmongUsReactor.Msg
+          | AGSMsg Zhaok31.AmongUsSecurity.Msg
+          | AGLMsg Zhaok31.AmongUsLowerEngine.Msg
+          | AGEMsg Zhaok31.AmongUsElectrical.Msg
+          | AGSTMsg Zhaok31.AmongUsStorage.Msg
+          | AGAMsg Zhaok31.AmongUsAdmin.Msg
+          | AGOXYMsg Zhaok31.Oxygentankgame10.Msg
+          | AGCARDMsg Zhaok31.CardSwiper.Msg
+          | AGWIREMsg Zhaok31.WiresGame.Msg
+
+          
+
+--states
+type State = TitleScreen
+              | Caf
+              | MedBay
+              | UpperEngine
+              | Reactor
+              | Security 
+              | LowerEngine
+              | Electrical
+              | Storage
+              | Admin
+              | Oxygen
+              | CardSwipe
+              | Wire
+
+            
+--models 
+type alias Model = { time : Float,
+                     startTime : Float,
+                     state : State,
+                     agtModel : Zhaok31.AmongUsTitle.Model,
+                     agcModel : Zhaok31.AmongUsCaf.Model,
+                     agmModel : Zhaok31.AmongUsMedBay.Model,
+                     aguModel : Zhaok31.AmongUsUpperEngine.Model,
+                     agrModel : Zhaok31.AmongUsReactor.Model,
+                     agsModel : Zhaok31.AmongUsSecurity.Model,
+                     aglModel : Zhaok31.AmongUsLowerEngine.Model,
+                     ageModel : Zhaok31.AmongUsElectrical.Model, 
+                     agstModel : Zhaok31.AmongUsStorage.Model, 
+                     agaModel : Zhaok31.AmongUsAdmin.Model,
+                     agoxyModel : Zhaok31.Oxygentankgame10.Model,
+                     agcardModel : Zhaok31.CardSwiper.Model,
+                     agwireModel : Zhaok31.WiresGame.Model
+                     }
+--update            
+update : Msg -> Model -> Model
+update msg model = case msg of
+                     -- tick for time 
+                     Tick t k -> {model | time = t, agtModel = Zhaok31.AmongUsTitle.update (Zhaok31.AmongUsTitle.Tick (model.time - model.startTime) k) model.agtModel,
+                                                    agcModel = Zhaok31.AmongUsCaf.update (Zhaok31.AmongUsCaf.Tick (model.time - model.startTime) k) model.agcModel,
+                                                    agmModel = Zhaok31.AmongUsMedBay.update (Zhaok31.AmongUsMedBay.Tick (model.time - model.startTime) k) model.agmModel,
+                                                    aguModel = Zhaok31.AmongUsUpperEngine.update (Zhaok31.AmongUsUpperEngine.Tick (model.time - model.startTime) k) model.aguModel,
+                                                    agrModel = Zhaok31.AmongUsReactor.update (Zhaok31.AmongUsReactor.Tick (model.time - model.startTime) k) model.agrModel,
+                                                    agsModel = Zhaok31.AmongUsSecurity.update (Zhaok31.AmongUsSecurity.Tick (model.time - model.startTime) k) model.agsModel,
+                                                    aglModel = Zhaok31.AmongUsLowerEngine.update (Zhaok31.AmongUsLowerEngine.Tick (model.time - model.startTime) k) model.aglModel,
+                                                    ageModel = Zhaok31.AmongUsElectrical.update (Zhaok31.AmongUsElectrical.Tick (model.time - model.startTime) k) model.ageModel,
+                                                    agstModel = Zhaok31.AmongUsStorage.update (Zhaok31.AmongUsStorage.Tick (model.time - model.startTime) k) model.agstModel,
+                                                    agaModel = Zhaok31.AmongUsAdmin.update (Zhaok31.AmongUsAdmin.Tick (model.time - model.startTime) k) model.agaModel,
+                                                    agoxyModel = Zhaok31.Oxygentankgame10.update (Zhaok31.Oxygentankgame10.Tick (model.time - model.startTime) k) model.agoxyModel,
+                                                   agcardModel = Zhaok31.CardSwiper.update (Zhaok31.CardSwiper.Tick (model.time - model.startTime) k) model.agcardModel,
+                                                   agwireModel = Zhaok31.WiresGame.update (Zhaok31.WiresGame.Tick (model.time - model.startTime) k) model.agwireModel
+
+
+
+                                                    }
+                     -- setting up the models
+                     AGTMsg agtMsg -> {model | agtModel = Zhaok31.AmongUsTitle.update agtMsg model.agtModel}
+                     AGCMsg agcMsg -> {model | agcModel = Zhaok31.AmongUsCaf.update agcMsg model.agcModel}
+                     AGMMsg agmMsg -> {model | agmModel = Zhaok31.AmongUsMedBay.update agmMsg model.agmModel}
+                     AGUMsg aguMsg -> {model | aguModel = Zhaok31.AmongUsUpperEngine.update aguMsg model.aguModel}
+                     AGRMsg agrMsg -> {model | agrModel = Zhaok31.AmongUsReactor.update agrMsg model.agrModel}
+                     AGSMsg agsMsg -> {model | agsModel = Zhaok31.AmongUsSecurity.update agsMsg model.agsModel}
+                     AGLMsg aglMsg -> {model | aglModel = Zhaok31.AmongUsLowerEngine.update aglMsg model.aglModel}
+                     AGEMsg ageMsg -> {model | ageModel = Zhaok31.AmongUsElectrical.update ageMsg model.ageModel}
+                     AGSTMsg agstMsg -> {model | agstModel = Zhaok31.AmongUsStorage.update agstMsg model.agstModel}
+                     AGAMsg agaMsg -> {model | agaModel = Zhaok31.AmongUsAdmin.update agaMsg model.agaModel}
+                     AGOXYMsg agoxyMsg -> {model | agoxyModel = Zhaok31.Oxygentankgame10.update agoxyMsg model.agoxyModel}
+                     AGCARDMsg agcardMsg -> {model | agcardModel = Zhaok31.CardSwiper.update agcardMsg model.agcardModel}
+                     AGWIREMsg agwireMsg -> {model | agwireModel = Zhaok31.WiresGame.update agwireMsg model.agwireModel}
+
+
+
+
+                      
+                    -- Button to play
+                     StartButton  ->
+                        case model.state of
+                            TitleScreen  -> { model | state = Caf, startTime = model.time }
+                            
+                            otherwise -> model
+                    
+                    --medbay button 
+                     MedBayButton  ->
+                        case model.state of
+                            Caf  -> { model | state = MedBay, startTime = model.time }
+                            
+                            otherwise -> model
+                    
+                    --upper Engine button 
+                     UpperEngineButton  ->
+                        case model.state of
+                            Caf  -> { model | state = UpperEngine, startTime = model.time }
+                            MedBay  -> { model | state = UpperEngine, startTime = model.time }
+                            otherwise -> model
+                            
+                   
+                            
+                    --Reactor button 
+                     ReactorButton ->
+                        case model.state of
+                            UpperEngine  -> { model | state = Reactor, startTime = model.time }
+                            Security  -> { model | state = Reactor, startTime = model.time }
+                            
+                            otherwise -> model
+                            
+                            
+                    --Security button
+                     SecurityButton  ->
+                        case model.state of
+                            UpperEngine   -> { model | state = Security, startTime = model.time }
+                            Reactor   -> { model | state = Security, startTime = model.time }
+                               
+                            otherwise -> model
+                            
+                     --Lower Engine button 
+                     LowerEngineButton ->
+                        case model.state of
+                            UpperEngine   -> { model | state = LowerEngine, startTime = model.time }
+                            Reactor   -> { model | state = LowerEngine, startTime = model.time }
+                            Security   -> { model | state = LowerEngine, startTime = model.time }
+                            
+                            otherwise -> model
+                            
+                     --Electrical button 
+                     ElectricalButton ->
+                        case model.state of
+                            LowerEngine   -> { model | state = Electrical, startTime = model.time }
+                            
+                            otherwise -> model
+                            
+                    --Storage button 
+                     StorageButton ->
+                        case model.state of
+                            Electrical   -> { model | state = Storage, startTime = model.time }
+                            LowerEngine   -> { model | state = Storage, startTime = model.time }
+                            
+                            otherwise -> model
+                            
+                    --Admin button 
+                     AdminButton ->
+                        case model.state of
+                            Storage   -> { model | state = Admin, startTime = model.time }
+                            
+                            otherwise -> model
+                   
+                   --Caf button 
+                     CafButton ->
+                        case model.state of
+                            Storage   -> { model | state = Caf, startTime = model.time }
+                            Admin   -> { model | state = Caf, startTime = model.time }
+                            
+                            otherwise -> model
+                  
+                  --CardSwiper Button 
+                     CardButton ->
+                        case model.state of
+                            Admin  -> { model | state = CardSwipe, startTime = model.time }
+                            
+                            otherwise -> model
+                            
+                   --Card exit button
+                     CardExitButton -> 
+                      case model.state of
+                            CardSwipe  -> { model | state = Admin, startTime = model.time }
+                            
+                            otherwise -> model
+                            
+                --oxygen button
+                     OxyButton -> 
+                      case model.state of
+                            Reactor  -> { model | state = Oxygen, startTime = model.time }
+                 
+                --oxygen exit button 
+                            otherwise -> model
+                     OxyExitButton -> 
+                      case model.state of
+                            Oxygen  -> { model | state = Reactor, startTime = model.time }
+                            
+                            otherwise -> model
+               
+               --wire button
+                     WireButton -> 
+                      case model.state of
+                            Electrical  -> { model | state = Wire, startTime = model.time }
+                            
+                            otherwise -> model
+                            
+                 -- wire exit button         
+                     WireExitButton -> 
+                      case model.state of
+                            Wire  -> { model | state = Electrical, startTime = model.time }
+                            
+                            otherwise -> model
+              
+                            
+--init                
+init = { time = 0, startTime = 0, state = TitleScreen, 
+         agtModel = Zhaok31.AmongUsTitle.init, 
+         agcModel = Zhaok31.AmongUsCaf.init,
+         agmModel = Zhaok31.AmongUsMedBay.init,
+         aguModel = Zhaok31.AmongUsUpperEngine.init,
+         agrModel = Zhaok31.AmongUsReactor.init,
+         agsModel = Zhaok31.AmongUsSecurity.init,
+         aglModel = Zhaok31.AmongUsLowerEngine.init,
+         ageModel = Zhaok31.AmongUsElectrical.init,
+         agstModel = Zhaok31.AmongUsStorage.init,
+         agaModel = Zhaok31.AmongUsAdmin.init,
+         agoxyModel = Zhaok31.Oxygentankgame10.init,
+         agcardModel = Zhaok31.CardSwiper.init,
+         agwireModel = Zhaok31.WiresGame.init}
+        
+--main
+main = gameApp Tick { model = init, view = view, update = update, title = "Game Slot" }
+--view
+view model = collage 192 128 (myShapes model)
+
+
+
+
+
+
+
